@@ -14,6 +14,7 @@ AI Multiverse is an interactive star map of AI notions, built for an IT team lea
 - **Field Log.** Dated notes per notion, private or shared with the team.
 - **Crew, Missions and Library.** Opt-in levels so colleagues know who to ask, real tools the team has built, and deliverables to reuse.
 - **Export My Journey.** A Markdown copy of your own progress and notes.
+- **Deep Field.** Beyond the edge of the map, a radar of emerging notions that are not ready to use yet, updated every week (see below).
 
 ## How it runs
 
@@ -39,6 +40,7 @@ README.md
 | `data/users/<id>` | each person's private statuses, notes and flight plan progress | that person only |
 | `fieldlog/<id>` | notes a person shares with the team | that person (the owner can moderate) |
 | `missions/<id>`, `crew/<id>`, `library/<id>` | missions, shared levels, shared deliverables | that person (the owner can moderate) |
+| `deepfield` | Deep Field objects and the log of the last scan | the owner only (the weekly scan runs as the owner) |
 
 Runtime capabilities declared when publishing the artifact (always pass the full set):
 
@@ -52,6 +54,18 @@ Runtime capabilities declared when publishing the artifact (always pass the full
   {"path":"fieldlog","read":"view","write":"owner"},{"path":"fieldlog/{self}","write":"interact"}]},
  "user":{"scopes":["profile"]},"downloads":true}
 ```
+
+## Deep Field: the weekly scan
+
+The Deep Field lists emerging AI notions (research, theory, early signals): at most 10 active objects on a radar placed by horizon (years to applicability) and relevance to the team, with heat, momentum, signal strength, what to watch and sources.
+
+A scheduled Claude task updates it every Monday:
+
+- **Review.** Each active object gets one or two targeted web searches for the last two weeks, including Asian labs and media; heat, momentum, signal, relevance, text and sources are updated when warranted.
+- **Discover.** Three to five broad searches look for new notions. A candidate needs at least two credible, independent sources; at most two objects are added per week. Hardware news goes into the report, not onto the radar.
+- **Keep the radar honest.** At least a third of the sources come from Asian labs or media; an object rated cold two weeks in a row fades out; when the field is full, a strong candidate replaces the weakest object.
+- **Never decide alone.** When an object becomes usable (real products, enterprise pilots), the scan recommends moving it to the main map; the author decides.
+- **Show its work.** Every topic searched, including searches that found nothing, is logged and shown on the page as "What the last scan looked at".
 
 ## Working on it
 
